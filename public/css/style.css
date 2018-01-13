@@ -11,7 +11,7 @@ body{
 	position: absolute;
 	right: 20px;
 	bottom: 0px;
-	background: white;
+	background: #5f5656;
 	width: 300px;
 	border-radius: 5px 5px 0px 0px;
 }
@@ -44,7 +44,7 @@ body{
 	height: 45px;
 	width: inherit;
 }
-.chat-text textarea{
+.chat-text input{
 	width: inherit;
 	height: inherit; 
 	box-sizing: border-box;

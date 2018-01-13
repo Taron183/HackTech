@@ -51,7 +51,7 @@
                 <div class="msg-receive"> Received message </div>
             </div>
             <div class="chat-text">
-                <textarea placeholder="Send"></textarea>
+                <input placeholder="Send" class="send" data-to_id=""></input>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Message;
+use App\Messenge;
 
 class MessengeController extends Controller
 {
@@ -24,7 +24,25 @@ class MessengeController extends Controller
      */
     public function create()
     {
-        //
+        $text = $_GET['text'];
+        $to_id = $_GET['to_id'];
+        $from_id = $_SESSION['user_id'];
+
+
+
+        $data =[
+            'text' => $text,
+            'from_id' => $from_id,
+            'to_id' => $to_id
+
+        ];
+
+        Messenge::insert($data);
+
+
+
+
+
     }
 
     /**
