@@ -3,19 +3,44 @@
 @section('content')
 <div class="container">
     <div class="row">
+
+       
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">E-mail</th>
+                        <th scope="col">Send message</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
-                <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+                    @php
+                        $i=0
+                    @endphp
 
-                    You are logged in!
-                </div>
+                    @foreach ($users as $user)
+
+                        <tr>
+                            <th scope="row">{{$i+=1}}</th>
+                            <td>{!! $user['name'] !!}</td>
+                            <td>{!! $user['email'] !!}</td>
+                            <td><button type="button" class="btn btn-success">Open Box Chat</button></td>
+                        </tr>
+                    @endforeach
+
+
+
+
+
+
+
+
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
