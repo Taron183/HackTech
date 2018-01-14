@@ -46,10 +46,13 @@
                                 <td></td>
                                 <td><a href="http://armface.am/admin/users/{{$user['id']}}/edit " type="button" class="btn btn-primary">Edit</a></td>
                                 <td>
-                                    {{ Form::open(array('url' => 'users/' . $user['id'])) }}
-                                    {{ Form::hidden('_method', 'DELETE') }}
-                                    {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
-                                    {{ Form::close() }}
+                                    @if(Auth::user()->id !=  $user['id'])
+                                        {{ Form::open(array('url' => 'users/' . $user['id'])) }}
+                                        {{ Form::hidden('_method', 'DELETE') }}
+                                        {{ Form::submit('Delete', array('class' => 'btn btn-danger')) }}
+                                        {{ Form::close() }}
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
