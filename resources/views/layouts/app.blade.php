@@ -36,6 +36,12 @@
                     <a class="navbar-brand" href="{{ url('/') }}">
                        Armface
                     </a>
+                    <ul class="nav navbar-nav">
+                        <li  {{{ (Request::is('home') ? 'class=active' : '') }}}><a href="/home">Home</a></li>
+                        @if(!empty(Auth::user()) && Auth::user()->isAdmin == 1)
+                            <li  {{{ (Request::is('admin/users') ? 'class=active' : '') }}}><a href="/admin/users">Manage Users</a></li>
+                        @endif
+                    </ul>
                 </div>
 
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">

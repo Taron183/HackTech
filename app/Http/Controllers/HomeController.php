@@ -27,7 +27,6 @@ class HomeController extends Controller
     {
         $id = Auth::id();
         $_SESSION['user_id'] = $id;
-
         $users = User::all()->where('id', '!=', $id);
         return view('home')->with('users',$users);
     }

@@ -28,5 +28,6 @@ Route::group(['middleware' => ['auth']], function () {
 Route::group( [ 'prefix' => 'admin', 'middleware' => ['auth','admin']], function () {
 
     Route::resource('users', 'UserController');
+
 });
 

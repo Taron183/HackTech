@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Validator;
+use Session;
+use Redirect;
+use Illuminate\Validation\Rule;
+use App\User;
+
 
 class UserController extends Controller
 {
@@ -13,7 +19,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin');
+        $users = User::all();
+
+        return view('admin')->with('users',$users);
     }
 
     /**
@@ -23,7 +31,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('create');
     }
 
     /**
@@ -34,7 +42,27 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $rules = [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ];
+
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()) {
+            return Redirect::to('/admin/users/create')->withErrors($validator);
+        }
+        $data['password'] = bcrypt($data['password']);
+        $user = new User($data);
+
+        if($user->save()){
+            // redirect
+            Session::flash('message', 'Successfully created the users!');
+            return Redirect::to('/admin/users');
+        } else {
+            return Redirect::to('/admin/users');
+        }
     }
 
     /**
@@ -56,7 +84,19 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $data['id'] = $id;
+        $validator = Validator::make($data, [
+            'id' => 'required|numeric|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::to('/admin/users')->withErrors($validator);
+        }
+
+        $user = User::find($id);
+
+       return view('edit')->with('user',$user);
     }
 
     /**
@@ -68,7 +108,33 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data =$request->all();
+        $data['id'] = $id;
+        $rules = [
+            'id' => 'required|numeric|exists:users,id',
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:6',
+        ];
+
+        $validator = Validator::make($data, $rules);
+
+        if ($validator->fails()) {
+            return Redirect::to('/admin/users/'.$id.'/edit')->withErrors($validator);
+        }
+
+        $user = User::find($id);
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->password = $data['password'];
+
+        if($user->save()){
+            // redirect
+            Session::flash('message', 'Successfully updated the users!');
+            return Redirect::to('/admin/users');
+        } else {
+            return Redirect::to('/admin/users');
+        }
     }
 
     /**
@@ -79,6 +145,27 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $data['id'] = $id;
+        $validator = Validator::make($data, [
+            'id' => 'required|numeric|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return Redirect::to('/admin/users')->withErrors($validator);
+        }
+
+        $user = User::find($id);
+
+        if($user->delete()){
+            // redirect
+            Session::flash('message', 'Successfully deleted the users!');
+            return Redirect::to('/admin/users');
+        } else {
+            return Redirect::to('/admin/users');
+        }
+
+
     }
+
+
 }
