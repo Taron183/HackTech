@@ -17,6 +17,16 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('messenges', 'MessengeController');
+    Route::resource('messenges', 'MessengeController');
+    Route::resource('users', 'UserController');
+
+});
+
+Route::group( [ 'prefix' => 'admin', 'middleware' => ['auth','admin']], function () {
+
+    Route::resource('users', 'UserController');
+});
+

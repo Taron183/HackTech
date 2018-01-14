@@ -1,10 +1,7 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row">
-
-
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <table class="table">
@@ -23,12 +20,11 @@
                     @endphp
 
                     @foreach ($users as $user)
-
                         <tr>
                             <th scope="row">{{$i+=1}}</th>
                             <td>{!! $user['name'] !!}</td>
                             <td>{!! $user['email'] !!}</td>
-                            <td><button type="button"  data-id = {!! $user['id'] !!} class="btn btn-success chat">Open Box Chat</button></td>
+                            <td><button type="button"  data-id = {!! $user['id'] !!}  data-name="{!! $user['name'] !!}" class="btn btn-success chat-boxp enable">Open Box Chat</button></td>
                         </tr>
                     @endforeach
 
@@ -39,21 +35,28 @@
     </div>
 </div>
 
-<div class="wrapper" style="display: none">
-    <div class="chat-box">
-        <div class="chat-head">
-            <h2>Chat Box</h2>
-            <img src="https://maxcdn.icons8.com/windows10/PNG/16/Arrows/angle_down-16.png" title="Expand Arrow" width="16">
+<div id="live-chat" style="display: none">
+
+    <header class="clearfix">
+
+        <a href="#" class="chat-close">x</a>
+
+        <h4 class="send-user-name">John Doe</h4>
+
+        <span class="chat-message-counter">3</span>
+
+    </header>
+
+    <div class="chat">
+
+        <div class="chat-history">
+        </div> <!-- end chat-history -->
+        <div class="send-inp">
+            <fieldset>
+                <input type="text" placeholder="Type your message…" data-to_id="" class="send" autofocus>
+            </fieldset>
         </div>
-        <div class="chat-body">
-            <div class="msg-insert">
-                <div class="msg-send"> Send message </div>
-                <div class="msg-receive"> Received message </div>
-            </div>
-            <div class="chat-text">
-                <input placeholder="Send" class="send" data-to_id=""></input>
-            </div>
-        </div>
-    </div>
-</div>
+    </div> <!-- end chat -->
+
+</div> <!-- end live-chat -->
 @endsection

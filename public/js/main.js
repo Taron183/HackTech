@@ -1,25 +1,81 @@
-$(".chat").click(function () {
-	$(".wrapper").show();
-	var to_id = $(this).attr("data-id");
-	$(".send").attr("data-to_id", to_id);
+$(".chat-boxp").click(function () {
+    last_id = 0;
+    $("#live-chat").show();
+    $('.chat-history').empty()
+    to_id = $(this).attr("data-id");
+    $(".send").attr("data-to_id", to_id);
+    name = $(this).attr("data-name");
+    $(".send-user-name").text(name)
+    chatInterval = setInterval(selectMessenges, 4000);
+});
+$('.chat-boxp').click(function (event) {
 
-
+    if ($(this).hasClass('enable')) {
+        $(this).prop("disabled", true);
+        $('.chat-boxp').removeClass('enable')
+    }else{
+        $('.chat-boxp').prop("disabled", false);
+        $(this).prop("disabled", true);
+    }
+});
+function  selectMessenges() {
     $.ajax({
-        url:'#',
+        url:'/messenges',
         method:'GET',
-        data:{to_id:to_id},
+        data:{to_id:to_id, last_id:last_id},
+        dataType: "json",
         success:function(response){
 
 
+            console.log(response);
 
-        	}
+            $.each(response, function(key,value) {
+
+
+                if(to_id == value['to_id'] ){
+
+
+                    $('.chat-history').append('<div class="chat-message clearfix">'+
+                        '<div class="chat-message-content clearfix">'+
+                        '<span class="chat-time">'+value['created_at']+'</span>'+
+                        '<h5 class="name">'+value['name']+'</h5>'+
+
+
+                        '<p>'+value['text']+'</p>'+
+
+
+                        '</div>'+
+                        '</div>');
+
+
+
+                }else{
+
+                    $('.chat-history').append('<div class="chat-message clearfix">'+
+                        '<div class="chat-message-content clearfix">'+
+                        '<span  class="chat-time" style="float: none;">'+value['created_at']+'</span>'+
+                        '<h5  class="name" style="float: right;">'+value['name']+'</h5>'+
+
+
+                        '<p style="float: right;  margin:40px -35px 0 11px;">'+value['text']+'</p>'+
+
+
+                        '</div>'+
+                        '</div>');
+
+
+
+                }
+
+                last_id = value['id']
+
+
+            });
+        }
 
 
     })
-
-})
-
-
+}
 $('.send').keypress(function (e) {
     var key = e.which;
     if(key == 13){
@@ -30,8 +86,8 @@ $('.send').keypress(function (e) {
 
 
         $.ajax({
-            url:'/messenges/create',
-            method:'GET',
+            url:'messenges',
+            method:'POST',
             data:{text:text,to_id: to_id},
             dataType: "json",
             success:function(response){
@@ -39,15 +95,12 @@ $('.send').keypress(function (e) {
             }
 
         })
-
-
-
         var text = $('.send').val('');
-
 	}
+});
 
 
-})
-
-
-
+$(".chat-close").click(function () {
+    clearInterval(chatInterval);
+    $("#live-chat").hide();
+});
