@@ -1,21 +1,22 @@
 @extends('layouts.app')
 @section('content')
-    <!-- will be used to show any messages -->
-    @if (Session::has('message'))
-        <div class="alert alert-info">{{ Session::get('message') }}</div>
-    @endif
-    @if ($errors->any())
-        <hr/>
-        <ul class="alert alert-danger">
-            @foreach($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    @endif
+
 
     <div class="container">
         <div class="row">
             <div class="col-md-12">
+                <!-- will be used to show any messages -->
+                @if (Session::has('message'))
+                    <div class="alert alert-info">{{ Session::get('message') }}</div>
+                @endif
+                @if ($errors->any())
+                    <hr/>
+                    <ul class="alert alert-danger">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                @endif
                 <div class="form-group style="margin-bottom: 10px;"">
                     <a href="/users/create" type="submit" class="btn btn-success" >Add User</a>
                 </div>
