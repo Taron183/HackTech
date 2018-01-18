@@ -71,6 +71,7 @@ $('.send').keypress(function (e) {
 
 //////////////////////////////////////////////////////////////////////////////// Close chat-box and  CleareInterval ///////////////////////////////////////////////////////////////////////////////////
 $(".chat-close").click(function () {
+    $('.chat-boxp').prop("disabled", false);
     clearInterval(chatInterval);
     $("#live-chat").hide();
 });

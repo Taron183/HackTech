@@ -45,7 +45,7 @@
                                 <td>{!! $user['name'] !!}</td>
                                 <td>{!! $user['email'] !!}</td>
                                 <td></td>
-                                <td><a href="http://armface.am/admin/users/{{$user['id']}}/edit " type="button" class="btn btn-primary">Edit</a></td>
+                                <td><a href="/admin/users/{{$user['id']}}/edit " type="button" class="btn btn-primary">Edit</a></td>
                                 <td>
                                     @if(Auth::user()->id !=  $user['id'])
                                         {{ Form::open(array('url' => 'users/' . $user['id'])) }}

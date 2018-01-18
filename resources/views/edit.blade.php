@@ -30,7 +30,7 @@
                 <input type="text" name="password" class="form-control" id="pwd" value="">
             </div>
             <div class="form-group" style="text-align: right;">
-                <button type="submit" class="btn btn-success" >Success</button>
+                <button type="submit" class="btn btn-success" >Edit</button>
             </div>
 
 
